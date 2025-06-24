@@ -83,9 +83,7 @@ const HomePage = ({ data }) => {
             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/1200x400/CCCCCC/333333?text=Image+Not+Found'; }}
           />
           <div className="image-overlay">
-            <h2 className="image-overlay-text">
-              Innovative Solutions for Your Future
-            </h2>
+
           </div>
         </div>
 
@@ -145,21 +143,21 @@ const AboutUsPage = ({ data }) => {
         <h1 className="main-heading text-teal-800">
           About <span className="highlight-text-blue">{businessName}</span>
         </h1>
-        <p className="sub-heading text-gray-700">
+        {/* <p className="sub-heading text-gray-700">
           {aboutBusiness} We are passionate about delivering high-quality solutions and fostering strong relationships with our clients.
-        </p>
+        </p> */}
 
-        <h2 className="section-heading text-teal-700">Meet Our Team</h2>
+        {/* <h2 className="section-heading text-teal-700">Meet Our Team</h2> */}
         <div className="grid-3-cols sm-grid-2-cols gap-8">
           {teamMembers.length > 0 ? (
             teamMembers.map((member) => (
               <div key={member.id} className="team-member-card bg-gradient-indigo-purple">
-                <img
+                {/* <img
                   src={member.imageUrl || 'https://placehold.co/150x150/EEEEEE/555555?text=No+Image'}
                   alt={member.name}
                   className="team-member-img"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/150x150/EEEEEE/555555?text=No+Image'; }}
-                />
+                /> */}
                 <h3 className="team-member-name text-indigo-800">{member.name}</h3>
                 <p className="team-member-position text-purple-600">{member.position}</p>
                 {member.date && <p className="team-member-date">Joined: {member.date}</p>}
@@ -184,9 +182,9 @@ const ProductsPage = ({ data }) => {
         <h1 className="main-heading text-red-800">
           Our <span className="highlight-text-pink">Products</span>
         </h1>
-        <p className="sub-heading text-gray-700">
+        {/* <p className="sub-heading text-gray-700">
           Explore our diverse range of products designed to enhance your experience and provide exceptional value.
-        </p>
+        </p> */}
 
         <div className="grid-3-cols sm-grid-2-cols gap-8">
           {products.length > 0 ? (
@@ -200,7 +198,7 @@ const ProductsPage = ({ data }) => {
                 />
                 <div className="product-details">
                   <h3 className="product-name text-gray-800">{product.name}</h3>
-                  <p className="product-price text-pink-600">${parseFloat(product.price).toFixed(2) || 'N/A'}</p>
+                  <p className="product-price text-pink-600">₹{parseFloat(product.price).toFixed(2) || 'N/A'}</p>
                   <p className="product-description text-gray-700">
                     {product.description || 'A high-quality product offering excellent features and reliability.'}
                   </p>
@@ -229,9 +227,9 @@ const SpecialtiesPage = ({ data }) => {
         <h1 className="main-heading text-lime-800">
           Our <span className="highlight-text-green">Specialties</span>
         </h1>
-        <p className="sub-heading text-gray-700">
+        {/* <p className="sub-heading text-gray-700">
           We pride ourselves on our core competencies and the specialized services we offer to our clients.
-        </p>
+        </p> */}
 
         <div className="grid-3-cols md-grid-2-cols gap-8">
           {specialties.length > 0 ? (
@@ -260,7 +258,7 @@ const BestEmployeePage = ({ data }) => {
     <div className="page-container bg-gradient-yellow-orange">
       <div className="content-card">
         <h1 className="main-heading text-orange-800">
-          Our <span className="highlight-text-yellow">Star Performers</span>
+          Our <span className="highlight-text-yellow">Team</span>
         </h1>
         <p className="sub-heading text-gray-700">
           We recognize and celebrate the exceptional contributions of our best employees. Their dedication drives our success.
@@ -612,6 +610,11 @@ function App() {
             margin-right: auto;
         }
         @media (min-width: 768px) {
+      
+    .content-card {
+    height: auto; /* Ensures it grows with content */
+}
+
             .sub-heading {
                 font-size: 1.25rem;
             }
