@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'; // Import useParams for URL params
 import { initializeApp } from 'firebase/app';
 import './App.css'; // Import your CSS styles
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, onValue,push,set } from 'firebase/database'; // Realtime Database imports
+import { getDatabase, ref, onValue, push, set } from 'firebase/database'; // Realtime Database imports
 import { getAnalytics } from "firebase/analytics"; // As per user's provided config
 import { Menu as MenuIcon, X as CloseIcon } from 'lucide-react'; // optional: use any icon
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -30,7 +30,7 @@ const analytics = getAnalytics(app); // Initialize analytics as per user's confi
 
 // Icons (using inline SVG for simplicity and consistency)
 const HomeIcon = () => (
- 
+
   <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"  ><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
 );
 const AboutUsIcon = () => (
@@ -88,19 +88,22 @@ const HomePage = ({ data }) => {
           {businessInfo?.AboutBusiness || 'Discover our services and see what makes us unique.'}
         </p>
 
-        <div className="image-hero-container">
-          <img
-            src={mainImageUrl}
-            alt="Business Main"
-            className="image-cover hover-scale"
-            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/1200x400/CCCCCC/333333?text=Image+Not+Found'; }}
-          />
-          <div className="image-overlay">
-            <h2 className="image-overlay-text">
-           
-            </h2>
+        <div className="center-wrapper-image">
+          <div className="image-hero-container">
+            <img
+              src={businessInfo?.businessLogo || mainImageUrl}
+              alt="Business Main"
+              className="image-cover hover-scale"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://placehold.co/1200x400/CCCCCC/333333?text=Image+Not+Found';
+              }}
+            />
+
           </div>
         </div>
+
+
 
         <div className="grid-2-cols gap-8 mt-12" data-aos="fade-up" data-aos-delay="100">
           <div className="card-item bg-gradient-blue-light" >
@@ -155,13 +158,13 @@ const AboutUsPage = ({ data }) => {
   useEffect(() => {
     AOS.init({
       duration: 1000, // animation duration
-     once: false,     // only animate once
+      once: false,     // only animate once
     });
-  
+
   })
-  
+
   return (
-    <div className="page-container bg-gradient-blue-teal"  data-aos="fade-up" data-aos-delay="300">
+    <div className="page-container bg-gradient-blue-teal" data-aos="fade-up" data-aos-delay="300">
       <div className="content-card">
         <h1 className="main-heading text-teal-800">
           About <span className="highlight-text-blue">{businessName}</span>
@@ -204,10 +207,10 @@ const ProductsPage = ({ data }) => {
       once: true,     // only animate once
     });
   })
-  
+
 
   return (
-    <div className="page-container bg-gradient-pink-red"  data-aos="fade-up" data-aos-delay="200">
+    <div className="page-container bg-gradient-pink-red" data-aos="fade-up" data-aos-delay="200">
       <div className="content-card">
         <h1 className="main-heading text-red-800">
           Our <span className="highlight-text-pink">Products</span>
@@ -216,14 +219,14 @@ const ProductsPage = ({ data }) => {
           Explore our diverse range of products designed to enhance your experience and provide exceptional value.
         </p>
 
-        <div className="grid-3-cols sm-grid-2-cols gap-8"  data-aos="fade-up" data-aos-delay="300">
+        <div className="grid-3-cols sm-grid-2-cols gap-8" data-aos="fade-up" data-aos-delay="300">
           {products.length > 0 ? (
             products.map((product) => (
               <div key={product.id} className="product-card bg-gradient-gray-light">
                 <img
                   src={product.imageUrl || 'https://placehold.co/400x300/CCCCCC/333333?text=Product+Image'}
                   alt={product.name}
-                  className="product-img hover-scale-img"
+                  className="w-[250px] h-[250px] object-cover mx-auto hover:scale-105 transition-transform duration-300"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x300/CCCCCC/333333?text=Product+Image'; }}
                 />
                 <div className="product-details">
@@ -251,16 +254,16 @@ const ProductsPage = ({ data }) => {
 // Specialties Page Component
 const SpecialtiesPage = ({ data }) => {
   const specialties = getSafeArray(data, 'Specialties');
-     useEffect(() => {
+  useEffect(() => {
     AOS.init({
       duration: 1000, // animation duration
       once: true,     // only animate once
     });
   }, []);
-  
+
   return (
     <div className="page-container bg-gradient-green-lime">
-      <div className="content-card"  data-aos="fade-up" data-aos-delay="300"   data-aos-once="false" data-aos-mirror="true">
+      <div className="content-card" data-aos="fade-up" data-aos-delay="300" data-aos-once="false" data-aos-mirror="true">
         <h1 className="main-heading text-lime-800" data-aos-delay="300">
           Our <span className="highlight-text-green">Specialties</span>
         </h1>
@@ -299,14 +302,14 @@ const BestEmployeePage = ({ data }) => {
   return (
     <div className="page-container bg-gradient-yellow-orange">
       <div className="content-card">
-        <h1 className="main-heading text-orange-800"  data-aos="fade-up" data-aos-delay="300">
+        <h1 className="main-heading text-orange-800" data-aos="fade-up" data-aos-delay="300">
           Our <span className="highlight-text-yellow">Meet Our Team</span>
         </h1>
         <p className="sub-heading text-gray-700" data-aos="fade-up" data-aos-delay="300">
           We recognize and celebrate the exceptional contributions of our best employees. Their dedication drives our success.
         </p>
 
-        <div className="grid-3-cols sm-grid-2-cols "  data-aos="fade-up" data-aos-delay="300">
+        <div className="grid-3-cols sm-grid-2-cols " data-aos="fade-up" data-aos-delay="300">
           {bestEmployees.length > 0 ? (
             bestEmployees.map((employee, index) => (
               <div key={index} className="employee-card bg-gradient-purple-pink">
@@ -324,17 +327,17 @@ const BestEmployeePage = ({ data }) => {
           ) : (
             <p className="no-data-message">No best employee awards to display yet.</p>
           )},
-          
-          
-           
-         
+
+
+
+
         </div>
-        
-        
+
+
       </div>
     </div>
   );
-};  
+};
 
 
 const ContactUsPage = ({ data }) => {
@@ -484,7 +487,7 @@ function App() {
   const isValidMobileNumber = trimmedMobileNumber && /^\d{10}$/.test(trimmedMobileNumber);
   const REALTIME_DB_PATH = isValidMobileNumber ? `MarketingPro/WebBuilder/${trimmedMobileNumber}` : null;
 
-  
+
   // Authentication setup
   useEffect(() => {
     try {
@@ -575,16 +578,16 @@ function App() {
     if (error) {
       return (
         <div className="error-container">
-          
-            <h2 className="error-heading">Error!</h2>
-            <p className="error-message">{error}</p>
-            {isValidMobileNumber && (
-              <p className="error-hint">
-                Please ensure your data is correctly structured in Realtime Database under: <br />
-                <span className="code-path">{REALTIME_DB_PATH}</span>
-              </p>
-            )}
-       
+
+          <h2 className="error-heading">Error!</h2>
+          <p className="error-message">{error}</p>
+          {isValidMobileNumber && (
+            <p className="error-hint">
+              Please ensure your data is correctly structured in Realtime Database under: <br />
+              <span className="code-path">{REALTIME_DB_PATH}</span>
+            </p>
+          )}
+
         </div>
       );
     }
@@ -592,17 +595,17 @@ function App() {
     if (!websiteData) {
       return (
         <div className="no-data-container">
-        
-            <h2 className="no-data-heading">No Data Found</h2>
-            <p className="no-data-message-text">
-              No website data available for mobile number:{' '}
-              <span className="highlight-text-yellow-dark">{trimmedMobileNumber}</span>.
-            </p>
-            <p className="no-data-hint">
-              Please ensure you have uploaded your business information to Realtime Database at: <br />
-              <span className="code-path">{REALTIME_DB_PATH}</span>
-            </p>
-      
+
+          <h2 className="no-data-heading">No Data Found</h2>
+          <p className="no-data-message-text">
+            No website data available for mobile number:{' '}
+            <span className="highlight-text-yellow-dark">{trimmedMobileNumber}</span>.
+          </p>
+          <p className="no-data-hint">
+            Please ensure you have uploaded your business information to Realtime Database at: <br />
+            <span className="code-path">{REALTIME_DB_PATH}</span>
+          </p>
+
         </div>
       );
     }
@@ -618,19 +621,19 @@ function App() {
         return <SpecialtiesPage data={websiteData} />;
       case 'bestEmployee':
         return <BestEmployeePage data={websiteData} />;
-     case 'contactUs':
-  return <ContactUsPage data={websiteData} mobileNumber={trimmedMobileNumber} />;
+      case 'contactUs':
+        return <ContactUsPage data={websiteData} mobileNumber={trimmedMobileNumber} />;
 
       default:
         return <HomePage data={websiteData} />;
     }
   }, [currentPage, loading, error, websiteData, REALTIME_DB_PATH, trimmedMobileNumber, isValidMobileNumber]);
- useEffect(() => {
-              AOS.init({
-                duration: 1000, // animation duration
-                once: true,     // only animate once   
-              });
-            }, []);
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // animation duration
+      once: true,     // only animate once   
+    });
+  }, []);
   return (
     <div className="app-container">
       {/* Custom CSS styles (unchanged) */}
@@ -639,40 +642,40 @@ function App() {
       </style>
 
       {/* Navigation Bar */}
-      
-        <div className="navbar-container">
-          <div className="navbar-brand">
-            {websiteData?.businessInfo?.businessName || 'Your Business'}
-          </div>
 
-          <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
-
-          <div className={`navbar-links ${menuOpen ? 'open' : ''}`} data-aos="fade-up" data-aos-delay="100">
-           
-            {[
-              { key: 'home', icon: <HomeIcon />, label: 'Home' },
-              { key: 'aboutUs', icon: <AboutUsIcon />, label: 'About Us' },
-              { key: 'products', icon: <ProductsIcon />, label: 'Products' },
-              { key: 'specialties', icon: <SpecialtiesIcon />, label: 'Specialties' },
-              { key: 'bestEmployee', icon: <BestEmployeeIcon />, label: 'Best Employee' },
-              { key: 'contactUs', icon: <ContactIcon />, label: 'Contact Us' }
-            ].map(({ key, icon, label }) => (
-              <button
-                key={key}
-                onClick={() => {
-                  setCurrentPage(key);
-                  setMenuOpen(false);
-                }}
-                className={`nav-button ${currentPage === key ? 'active' : ''}`}
-              >
-                {icon} {label}
-              </button>
-            ))}
-          </div>
+      <div className="navbar-container">
+        <div className="navbar-brand">
+          {websiteData?.businessInfo?.businessName || 'Your Business'}
         </div>
-    
+
+        <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
+
+        <div className={`navbar-links ${menuOpen ? 'open' : ''}`} data-aos="fade-up" data-aos-delay="100">
+
+          {[
+            { key: 'home', icon: <HomeIcon />, label: 'Home' },
+            { key: 'aboutUs', icon: <AboutUsIcon />, label: 'About Us' },
+            { key: 'products', icon: <ProductsIcon />, label: 'Products' },
+            { key: 'specialties', icon: <SpecialtiesIcon />, label: 'Specialties' },
+            { key: 'bestEmployee', icon: <BestEmployeeIcon />, label: 'Best Employee' },
+            { key: 'contactUs', icon: <ContactIcon />, label: 'Contact Us' }
+          ].map(({ key, icon, label }) => (
+            <button
+              key={key}
+              onClick={() => {
+                setCurrentPage(key);
+                setMenuOpen(false);
+              }}
+              className={`nav-button ${currentPage === key ? 'active' : ''}`}
+            >
+              {icon} {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
 
       {/* Page Content */}
       <main className="app-container-main">

@@ -7,7 +7,7 @@ const HomePage = ({ data, getSafeArray }) => {
     const mainImageUrl = images.length > 0 ? images[0].imageUrl : 'https://placehold.co/1200x400/CCCCCC/333333?text=Main+Image';
 
     return (
-        <div className="page-container bg-gradient-purple-indigo">
+        <div className="page-container bg-gradient-purple-indigo margin-top-56">
             <div className="content-card">
                 <h1 className="main-heading text-indigo-800">
                     Welcome to <span className="highlight-text-purple">{businessInfo?.businessName || 'Our Business'}</span>
